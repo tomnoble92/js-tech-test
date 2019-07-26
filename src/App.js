@@ -1,30 +1,50 @@
 import React from 'react';
+import Event from './components/event/Event'
 import './App.css';
 
 
 class App extends React.Component {
-  
+  constructor() {
+    super()
+    this.state = {
+      data: null
+    }
+  }
     componentDidMount() {
       let client
-      const promise = new Promise((resolve,reject) => {
+      const promise = new Promise((resolve) => {
         client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
         client.onopen = () => {
-          console.log('connected')
           resolve(client)
         }
       })  
 
-      client.addEventListener("message", e => console.log(e.data))
-        promise.then((value) => {
-          client.send(JSON.stringify({type: "getLiveEvents", primaryMarkets: false}));
-          console.log('promise',)
+      promise.then(() => {
+        client.send(JSON.stringify({type: "getLiveEvents", primaryMarkets: true}))
+        client.onmessage = (e) => {
+          const data = JSON.parse(e.data)
+          if(data.type !== "INIT") {
+            this.setState({data:data})
+          }
+        }
+      }).catch(e => {
+        console.log(e)
       })
     }
 
     render() {
+      if(this.state.data !== null) {
+        const data = this.state.data.data
+        const matches = data.map((match) => <Event data={match} key={match.eventId} />)
       return(
-        <div>Hello World</div>
+        <div>{matches}</div>
       )
+      } else {
+        return (<div>loading</div>)
+      }
+      
+ 
+      
     }
 }
 
