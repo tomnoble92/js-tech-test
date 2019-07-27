@@ -1,4 +1,5 @@
 import React from 'react';
+import './event.css'
 
 
 class Event extends React.Component {
@@ -12,7 +13,13 @@ class Event extends React.Component {
     }
 
     render() {
-        return (<div>{this.props.data.name}</div>)
+      const time = this.props.data.startTime.slice(11,16)
+        return (
+        <button className="event">
+          <span className="event__time">{time}</span>
+          <span>{this.props.data.name}</span>
+        </button>
+        )
     }
 }
 

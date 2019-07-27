@@ -37,7 +37,12 @@ class App extends React.Component {
         const data = this.state.data.data
         const matches = data.map((match) => <Event data={match} key={match.eventId} />)
       return(
-        <div>{matches}</div>
+        <section className="event-class-container">
+          <header>
+            <h1 className="event-class-title">Live Football Events</h1>
+          </header>
+          {matches}
+        </section>
       )
       } else {
         return (<div>loading</div>)
