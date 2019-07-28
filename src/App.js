@@ -1,5 +1,6 @@
 import React from 'react';
 import Event from './components/event/Event'
+import EventMarket from './components/eventmarkets/EventMarkets'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
 
@@ -36,6 +37,8 @@ class App extends React.Component {
 
     handleEventURL(data) {
       this.setState({url: data.eventId, selectedEvent: data})
+      sessionStorage.setItem('url', data.eventId)
+      sessionStorage.setItem('event', JSON.stringify(data))
     }
     
 
@@ -53,7 +56,7 @@ class App extends React.Component {
             {matches}
           </section>
           )}/>
-          <Route path={`/event/${this.state.url}`} render={() => <div>Event Market {this.state.url}</div>} />
+          <Route path={`/event/${sessionStorage.getItem('url')}`} render={() => <EventMarket />} />
         </div>
       
       )

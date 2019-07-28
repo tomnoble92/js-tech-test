@@ -1,0 +1,43 @@
+.scoreboard {
+    width: 100%;
+    padding: 16px;
+    color: #fff;
+    font-weight: 700;
+    background-color:#0D1F51;
+}
+
+.scoreboard__team {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.scoreboard__score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    color: #333;
+}
+
+@media (min-width: 425px) {
+    .scoreboard {
+        display: flex;
+        justify-content: center;
+    }
+
+    .scoreboard__score {
+        margin: 0 8px;
+    }
+
+    .scoreboard__team {
+        margin: 0;
+    }
+
+    .scoreboard__team--away {
+        flex-direction: row-reverse;
+    }
+}

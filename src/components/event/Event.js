@@ -14,7 +14,7 @@ function Event(props) {
         <span className="event_time">{time}</span>
         <span>{props.data.name}</span>
       </button>
-      </Link>
+    </Link>
   )
 }
 
