@@ -1,0 +1,30 @@
+.outcome {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #fafafa;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.outcome div {
+    padding: 16px;
+}
+
+.outcome__name {
+    width: 100%;
+    text-align: left;
+    font-size: 14px;
+}
+
+
+.outcome__odds {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80px;
+    width: 80px;
+    color: #D92231;
+    font-weight: 500;
+    border-left: 1px solid #eee;
+}

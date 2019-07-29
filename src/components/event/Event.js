@@ -4,15 +4,14 @@ import { Link } from "react-router-dom"
 
 function Event(props) {
   function handleClick() {
-    props.pickURL(props.data)
-    console.log(props.data)
+    props.pickURL(props.id)
   }
-  const time = props.data.startTime.slice(11,16)
+  const time = props.time.slice(11,16)
   return(
-    <Link to={`/event/${props.data.eventId}`}>
+    <Link to={`/event/${props.id}`}>
       <button className="event" type="button" onClick={(e) => handleClick(e)}>
         <span className="event_time">{time}</span>
-        <span>{props.data.name}</span>
+        <span>{props.name}</span>
       </button>
     </Link>
   )

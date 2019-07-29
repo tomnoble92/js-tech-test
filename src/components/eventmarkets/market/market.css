@@ -1,0 +1,17 @@
+.market {
+
+}
+
+.market button {
+    width: 100%;
+    border: none;
+    padding: 16px;
+    background-color: #153f8e;
+    color: #fff;
+}
+
+
+.market__outcomes {
+    display: flex;
+    flex-wrap: wrap;
+}

@@ -15,6 +15,7 @@ class App extends React.Component {
   }
     componentDidMount() {
       let client
+      let data
       const promise = new Promise((resolve) => {
         client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
         client.onopen = () => {
@@ -23,13 +24,13 @@ class App extends React.Component {
       })  
 
       promise.then(() => {
-        client.send(JSON.stringify({type: "getLiveEvents", primaryMarkets: true}))
-        client.onmessage = (e) => {
-          const data = JSON.parse(e.data)
+        client.addEventListener("message", (m) => {
+          const data = JSON.parse(m.data)
           if(data.type !== "INIT") {
-            this.setState({data:data})
+            this.setState({data: data})
           }
-        }
+        })
+        client.send(JSON.stringify({type: "getLiveEvents", primaryMarkets: true }))
       }).catch(e => {
         console.log(e)
       })
@@ -40,12 +41,12 @@ class App extends React.Component {
       sessionStorage.setItem('url', data.eventId)
       sessionStorage.setItem('event', JSON.stringify(data))
     }
-    
 
     render() {
+
       if(this.state.data !== null) {
         const data = this.state.data.data
-        const matches = data.map((match) => <Event data={match} key={match.eventId} pickURL={this.handleEventURL}/>)
+        const matches = data.map((match) => <Event time={match.startTime} name={match.name} id={match.eventId} key={match.eventId} pickURL={this.handleEventURL}/>)
       return(
         <div>
             <Route exact path='/' render={() => (
@@ -56,7 +57,7 @@ class App extends React.Component {
             {matches}
           </section>
           )}/>
-          <Route path={`/event/${sessionStorage.getItem('url')}`} render={() => <EventMarket />} />
+          <Route path={`/event/${sessionStorage.getItem('event')}`} render={() => <EventMarket />} />
         </div>
       
       )

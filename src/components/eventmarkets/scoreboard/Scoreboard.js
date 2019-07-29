@@ -12,7 +12,7 @@ function Scoreboard(props) {
             <div className="scoreboard__name">{props.teams[1].name}</div>
             <div className="scoreboard__score">{props.scores.away}</div>
         </div>
-        </div> 
+    </div> 
   )
 }
 
