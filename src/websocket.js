@@ -1,8 +1,12 @@
 
-
-  export const socketPromise = () => new Promise((resolve,socket) => {
-    socket = new WebSocket('ws://localhost:8889/', 'echo-protocol')
-    socket.onopen = () => {
-      resolve(socket)
-    }
-  })
+export function socketPromise(ws) {
+  return new Promise(function(resolve, reject) {
+    ws = new WebSocket('ws://localhost:8889/', 'echo-protocol')
+      ws.onopen = function() {
+          resolve(ws);
+      };
+      ws.onerror = function(err) {
+          reject(err);
+      };
+  });
+}

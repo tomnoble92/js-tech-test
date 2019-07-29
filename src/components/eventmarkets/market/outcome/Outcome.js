@@ -31,8 +31,6 @@ class Outcome extends React.Component {
           })
     }
 
-
-
     render() {
         if(this.state.outcomeData) {
             return (

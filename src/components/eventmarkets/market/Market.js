@@ -32,18 +32,36 @@ class Market extends React.Component {
               }
           }
   }).catch(e => {
-      console.log(e)
     })
   }
+
+  componentWillUnmount() {
+    let client
+    const promise = new Promise((resolve) => {
+        client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
+        client.onopen = () => {
+          resolve(client)
+        }
+    })
+
+    promise.then(() => {
+        client.send(JSON.stringify({ type: "unsubscribe" }))
+    })
+}
+
+  handleClick(e) {
+    this.setState(prevState => ({isOpen: !prevState.isOpen}))
+  }
+
   render() {
     if(this.state.marketData) {
       const outcomes = this.state.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} />)
       return (
-        <div className="market">
-          <button>
+        <div className={this.state.isOpen ? "market-accordion js-open" : "market-accordion"}>
+          <button onClick={(e) => this.handleClick(e)}>
             {this.state.marketData.data.name}
           </button>
-          <div>
+          <div className="market-accordion__content">
             {outcomes}
           </div>
       </div>

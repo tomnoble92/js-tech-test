@@ -3,7 +3,7 @@ import Event from './components/event/Event'
 import EventMarket from './components/eventmarkets/EventMarkets'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import './App.css';
-
+import {socketPromise} from './websocket'
 
 class App extends React.Component {
   constructor() {
@@ -14,27 +14,19 @@ class App extends React.Component {
     }
   }
     componentDidMount() {
-      let client
-      let data
-      const promise = new Promise((resolve) => {
-        client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
-        client.onopen = () => {
-          resolve(client)
-        }
-      })  
-
-      promise.then(() => {
-        client.addEventListener("message", (m) => {
-          const data = JSON.parse(m.data)
-          if(data.type !== "INIT") {
-            this.setState({data: data})
-          }
-        })
-        client.send(JSON.stringify({type: "getLiveEvents", primaryMarkets: true }))
-      }).catch(e => {
-        console.log(e)
-      })
-    }
+      socketPromise().then((ws) => {
+        this.setState({socket: ws})
+        ws.addEventListener("message", (m) => {
+            const data = JSON.parse(m.data)
+            if(data.type !== "INIT") {
+              this.setState({data: data})
+            }
+          })
+          ws.send(JSON.stringify({type: "getLiveEvents",  primaryMarkets: true }))
+    }).catch(err => {
+        console.log(err)
+    })
+  }
 
     handleEventURL(data) {
       this.setState({url: data.eventId, selectedEvent: data})

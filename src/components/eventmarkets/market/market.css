@@ -1,13 +1,37 @@
-.market {
+.market-accordion {
 
 }
 
-.market button {
+.market-accordion.js-open button {
+    background-color: #153f8e;
+    color: #fff
+}
+
+.market-accordion.js-open .market-accordion__content {
+    max-height: 5000px;
+}
+
+.market-accordion button {
     width: 100%;
     border: none;
     padding: 16px;
+    background-color: #DFE8F3;
+    color: #333;
+}
+
+.market-accordion__content {
+    max-height: 0;
+    overflow: hidden;
+}
+
+
+.market-accordion:nth-of-type(1) button {
     background-color: #153f8e;
-    color: #fff;
+    color: #fff
+}
+
+.market-accordion:nth-of-type(1) .market-accordion__content {
+    max-height: 5000px;
 }
 
 
