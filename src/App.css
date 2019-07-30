@@ -1,9 +1,16 @@
-.event-class-container header {
+.app-header{
+  display: flex;
+  justify-content: space-between;
   background-color: #0A276C;
   color: #fff;
 }
 
 .event-class-title {
+  font-size: 18px;
   margin: 0;
   padding: 16px;
+}
+
+.btn {
+  color: #fff;
 }

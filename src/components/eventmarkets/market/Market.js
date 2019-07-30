@@ -1,7 +1,6 @@
 import React from 'react';
 import Outcome from './outcome/Outcome'
 import './market.css'
-import {socketPromise} from '../../../websocket'
 
 class Market extends React.Component {
 
@@ -23,14 +22,13 @@ class Market extends React.Component {
       })
   }
 
-
   handleClick(e) {
     this.setState(prevState => ({isOpen: !prevState.isOpen}))
   }
 
   render() {
     if(this.state.marketData) {
-      const outcomes = this.state.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} socket={this.props.socket} />)
+      const outcomes = this.state.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} socket={this.props.socket} oddFormat={this.props.oddFormat} />)
       return (
         <div className={this.state.isOpen ? "market-accordion js-open" : "market-accordion"}>
           <button onClick={(e) => this.handleClick(e)}>
