@@ -1,53 +1,28 @@
 import React from 'react';
 import Outcome from './outcome/Outcome'
 import './market.css'
+import {socketPromise} from '../../../websocket'
 
 class Market extends React.Component {
 
   constructor() {
     super()
     this.state = {
-      outcomes: []
+      marketData: null
     }
   }
 
 
-
   componentDidMount() {
-    let client
-    
-    const promise = new Promise((resolve) => {
-      client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
-      client.onopen = () => {
-        resolve(client)
-      }
-    })
-
-    promise.then(() => {
-          client.send(JSON.stringify({ type: "getMarket", id: this.props.marketId }))
-          client.onmessage = (e) => {
-              const data = JSON.parse(e.data)
-              if(data.type !== "INIT") {
-                this.setState({marketData:data})
-              }
+      this.props.socket.send(JSON.stringify({type: "getMarket",  id: this.props.marketId }))
+      this.props.socket.addEventListener("message", (m) => {
+          const data = JSON.parse(m.data)
+          if(data.data.marketId === this.props.marketId && data.type === "MARKET_DATA" ) {
+            this.setState({marketData: data})
           }
-  }).catch(e => {
-    })
+      })
   }
 
-  componentWillUnmount() {
-    let client
-    const promise = new Promise((resolve) => {
-        client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
-        client.onopen = () => {
-          resolve(client)
-        }
-    })
-
-    promise.then(() => {
-        client.send(JSON.stringify({ type: "unsubscribe" }))
-    })
-}
 
   handleClick(e) {
     this.setState(prevState => ({isOpen: !prevState.isOpen}))
@@ -55,7 +30,7 @@ class Market extends React.Component {
 
   render() {
     if(this.state.marketData) {
-      const outcomes = this.state.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} />)
+      const outcomes = this.state.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} socket={this.props.socket} />)
       return (
         <div className={this.state.isOpen ? "market-accordion js-open" : "market-accordion"}>
           <button onClick={(e) => this.handleClick(e)}>
@@ -66,10 +41,7 @@ class Market extends React.Component {
           </div>
       </div>
       )
-    } else return null
-    
-    //const outcomes = this.state.outcomes.map((outcome) => <Outcome key={outcome.data.outcomeId} outcomeData={outcome} />)
-    
+    } else return null    
   }
 }
 

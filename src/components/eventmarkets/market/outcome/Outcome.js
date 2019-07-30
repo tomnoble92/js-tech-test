@@ -10,25 +10,13 @@ class Outcome extends React.Component {
     }
 
     componentDidMount() {
-        let client
-        const promise = new Promise((resolve) => {
-            client = new WebSocket('ws://localhost:8889/', 'echo-protocol')
-            client.onopen = () => {
-              resolve(client)
+        this.props.socket.send(JSON.stringify({type: "getOutcome",  id: this.props.outcomeId }))
+        this.props.socket.addEventListener("message", (m) => {
+            const data = JSON.parse(m.data)
+            if(data.data.outcomeId === this.props.outcomeId && data.type === "OUTCOME_DATA") {
+                this.setState({outcomeData: data})
             }
-          })
-      
-          promise.then(() => {
-                client.send(JSON.stringify({ type: "getOutcome", id: this.props.outcomeId }))
-                client.onmessage = (e) => {
-                    const data = JSON.parse(e.data)
-                    if(data.type !== "INIT") {
-                      this.setState({outcomeData:data})
-                    }
-                }
-        }).catch(e => {
-            console.log(e)
-          })
+        })
     }
 
     render() {
@@ -40,7 +28,6 @@ class Outcome extends React.Component {
                 </div>
             )
         } else return null
-    
     }
 }
 

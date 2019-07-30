@@ -6,27 +6,30 @@ import './App.css';
 import {socketPromise} from './websocket'
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.handleEventURL = this.handleEventURL.bind(this)
-    this.state = {
-      data: null
+    constructor() {
+      super()
+      this.handleEventURL = this.handleEventURL.bind(this)
+      this.state = {
+        data: null
+      }
     }
-  }
+
+    ws = new WebSocket('ws://localhost:8889/', 'echo-protocol')
     componentDidMount() {
-      socketPromise().then((ws) => {
+      socketPromise(this.ws).then((ws) => {
         this.setState({socket: ws})
         ws.addEventListener("message", (m) => {
-            const data = JSON.parse(m.data)
-            if(data.type !== "INIT") {
+          const data = JSON.parse(m.data)
+            if(data.type === "LIVE_EVENTS_DATA") {
               this.setState({data: data})
             }
-          })
-          ws.send(JSON.stringify({type: "getLiveEvents",  primaryMarkets: true }))
-    }).catch(err => {
+          }
+        )
+        ws.send(JSON.stringify({type: "getLiveEvents",  primaryMarkets: true }))
+      }).catch(err => {
         console.log(err)
-    })
-  }
+      })
+    }
 
     handleEventURL(data) {
       this.setState({url: data.eventId, selectedEvent: data})
@@ -35,32 +38,27 @@ class App extends React.Component {
     }
 
     render() {
-
-      if(this.state.data !== null) {
+      if(this.state.data) {
         const data = this.state.data.data
         const matches = data.map((match) => <Event time={match.startTime} name={match.name} id={match.eventId} key={match.eventId} pickURL={this.handleEventURL}/>)
-      return(
-        <div>
+        return(
+          <div>
             <Route exact path='/' render={() => (
-            <section className="event-class-container">
-            <header>
-              <h1 className="event-class-title">Live Football Events</h1>
-            </header>
-            {matches}
-          </section>
-          )}/>
-          <Route path={`/event/${sessionStorage.getItem('event')}`} render={() => <EventMarket />} />
-        </div>
-      
-      )
+              <section className="event-class-container">
+                <header>
+                  <h1 className="event-class-title">Live Football Events</h1>
+                </header>
+                {matches}
+              </section>
+            )}/>
+            <Route path={`/event/${sessionStorage.getItem('event')}`} render={() => <EventMarket socket={this.ws} />} />
+          </div>
+        )
       } else {
         return (
           <div>Loading</div>
         )
       }
-      
- 
-      
     }
 }
 
