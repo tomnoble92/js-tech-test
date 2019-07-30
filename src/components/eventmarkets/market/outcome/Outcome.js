@@ -1,6 +1,5 @@
 import React from 'react'
 import './outcome.css'
-import {OddsContext} from '../../../../providers/OddDisplayProvider'
 
 class Outcome extends React.Component {
     constructor() {

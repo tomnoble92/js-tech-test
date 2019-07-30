@@ -1,6 +1,7 @@
 import React from 'react';
 import './eventmarket.css'
-import Scoreboard from './scoreboard/Scoreboard';
+import Scoreboard from './scoreboard/Scoreboard'
+import MarketCollection from './marketcollection/MarketCollection'
 import Market from './market/Market'
 
 class EventMarkets extends React.Component {
@@ -33,8 +34,8 @@ class EventMarkets extends React.Component {
                     <header>
                          <Scoreboard teams={eventData.competitors} scores={eventData.scores} />
                     </header>
-                    <div className="">
-                        {selectedMarkets}
+                    <div>
+                        <MarketCollection marketIds={this.state.eventData.data.markets} oddFormat={this.props.oddFormat} socket={this.props.socket} />
                     </div>
                 </section>
             )
