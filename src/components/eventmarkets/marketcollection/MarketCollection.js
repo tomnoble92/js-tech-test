@@ -10,11 +10,10 @@ class MarketCollection extends React.Component {
         }
     }
 
-    componentDidMount() {
-        
+    componentDidMount() {  
         const ids = this.props.marketIds
         const sliceIds = ids.slice(0,10)
-
+        
         sliceIds.forEach(id => {
             this.props.socket.send(JSON.stringify({type: "getMarket",  id: id }))
         })
