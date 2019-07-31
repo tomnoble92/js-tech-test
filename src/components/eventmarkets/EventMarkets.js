@@ -2,33 +2,35 @@ import React from 'react';
 import './eventmarket.css'
 import Scoreboard from './scoreboard/Scoreboard'
 import MarketCollection from './marketcollection/MarketCollection'
-import Market from './market/Market'
 
 class EventMarkets extends React.Component {
     constructor() {
         super() 
         this.state = {
+            eventData: null,
             eventId: JSON.parse(sessionStorage.getItem('event')),
         }
     }
 
+    parseData(m) {
+        const data = JSON.parse(m.data)
+        if(data.type === "EVENT_DATA") {
+            this.setState({eventData: data})
+        }
+    }
+
     componentDidMount() {
-        this.props.socket.addEventListener("message", (m) => {
-            const data = JSON.parse(m.data)
-            if(data.type === "EVENT_DATA") {
-                this.setState({eventData: data})
-            }
-        })
+        this.props.socket.onmessage = (m) => this.parseData(m)
         this.props.socket.send(JSON.stringify({type: "getEvent",  id: this.state.eventId }))
     }
 
-
+    componentWillUnmount() {
+        this.props.socket.removeEventListener("message", (m) => this.parseData(m),true)
+    }
 
     render() {
         if(this.state.eventData) {
             const eventData = this.state.eventData.data
-            const markets = eventData.markets.slice(0,10)
-            const selectedMarkets = markets.map((market) => <Market marketId={market} key={market} socket={this.props.socket} oddFormat={this.props.oddFormat} />)
             return (
                 <section className="page-content">
                     <header>

@@ -6,8 +6,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import createBrowserHistory from './components/history'
 
-
-
 ReactDOM.render(<Router history={createBrowserHistory}><App /></Router>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

@@ -13,11 +13,11 @@ class Market extends React.Component {
 
   handleClick(e) {
     this.setState(prevState => ({isOpen: !prevState.isOpen}))
-    this.outcomes = this.props.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} socket={this.props.socket} oddFormat={this.props.oddFormat} />)
   }
 
   render() {
-    if(this.props.marketData) {
+    if(this.props.marketData && this.props.marketData.data.status.displayable) {
+      this.outcomes = this.props.marketData.data.outcomes.map((outcome) => <Outcome outcomeId={outcome} key={outcome} socket={this.props.socket} oddFormat={this.props.oddFormat} />)
       return (
         <div className={this.state.isOpen ? "market-accordion js-open" : "market-accordion"}>
           <button onClick={(e) => this.handleClick(e)}>
@@ -28,7 +28,7 @@ class Market extends React.Component {
           </div>
       </div>
       )
-    } else return <div>loading</div>    
+    } else return null   
   }
 }
 

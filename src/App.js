@@ -1,6 +1,6 @@
 import React from 'react';
 import Event from './components/event/Event'
-import EventMarket from './components/eventmarkets/EventMarkets'
+import EventMarkets from './components/eventmarkets/EventMarkets'
 import { Route } from "react-router-dom";
 import './App.css';
 import {socketPromise} from './websocket'
@@ -19,14 +19,12 @@ class App extends React.Component {
     ws = new WebSocket('ws://localhost:8889/', 'echo-protocol')
     componentDidMount() {
       socketPromise(this.ws).then((ws) => {
-        this.setState({socket: ws})
-        ws.addEventListener("message", (m) => {
+        ws.onmessage = (m) => {
           const data = JSON.parse(m.data)
             if(data.type === "LIVE_EVENTS_DATA") {
               this.setState({data: data})
             }
-          }
-        )
+        }
         ws.send(JSON.stringify({type: "getLiveEvents",  primaryMarkets: false }))
       }).catch(err => {
         console.log(err)
@@ -68,7 +66,7 @@ class App extends React.Component {
                 {matches}
               </section>
             )}/>
-            <Route path={`/event/${sessionStorage.getItem('event')}`} render={() => <EventMarket socket={this.ws} oddFormat={this.state.oddFormat} />} />
+            <Route path={`/event/${sessionStorage.getItem('event')}`} render={() => <EventMarkets socket={this.ws} oddFormat={this.state.oddFormat} />} />
           </div>
         )
       } else {
