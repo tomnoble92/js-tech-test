@@ -40,8 +40,6 @@ class Outcome extends React.Component {
         }
     }
 
-
-    
     render() {
         const oddFormatChoice = this.formatOdd(this.state.outcomeData)
         let data
