@@ -46,3 +46,14 @@ Open http://localhost:3000 to view it in the browser.
 # To start the test suite run the below command in the root directory
 npm test
 ```
+
+## Reflection
+
+Relecting on the project and the decisons I made.
+
+Moving forward I need to... 
+
+* Invest time learning how to write a proper test suite.
+* Plan the project in more depth I had to refactor a number of components when the scope changed,
+Really aim towards writing all the tests before developement begins, which therefore will help me gain a better understanding of the protential scope of the project.
+

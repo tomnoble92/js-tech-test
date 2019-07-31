@@ -63,9 +63,9 @@ class App extends React.Component {
               <button type="button" className="btn" onClick={(e) => this.OddsFormatToggle(e)}>Toggle Odd Format</button>
             </header>
             <Route exact path='/' render={() => (
-              <section className="event-class-container">
+              <main className="event-class-container">
                 {matches}
-              </section>
+              </main>
             )}/>
             <Route path={`/event/${sessionStorage.getItem('event')}`} render={() => <EventMarkets socket={this.ws} oddFormat={this.state.oddFormat} />} />
           </div>
