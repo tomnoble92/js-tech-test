@@ -24,10 +24,6 @@ class EventMarkets extends React.Component {
         this.props.socket.send(JSON.stringify({type: "getEvent",  id: this.state.eventId }))
     }
 
-    componentWillUnmount() {
-        this.props.socket.removeEventListener("message", (m) => this.parseData(m),true)
-    }
-
     render() {
         if(this.state.eventData) {
             const eventData = this.state.eventData.data

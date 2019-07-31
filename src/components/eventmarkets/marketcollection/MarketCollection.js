@@ -12,10 +12,10 @@ class MarketCollection extends React.Component {
 
     parseData(m) {
         const data = JSON.parse(m.data)
-            if(data.type === "MARKET_DATA") {
-                const array = this.state.marketArray.concat(data)
-                this.setState({marketArray: array})
-            }
+        if(data.type === "MARKET_DATA") {
+            const array = this.state.marketArray.concat(data)
+            this.setState({marketArray: array})
+        }
     }
 
     componentDidMount() {  
@@ -32,13 +32,14 @@ class MarketCollection extends React.Component {
             const sortedMarkets = this.state.marketArray.sort((a,b) => {
                 return a.data.displayOrder - b.data.displayOrder
             })
-            const markets = sortedMarkets.map((market) => <Market 
-                                                        marketData={market} 
-                                                        key={market.data.marketId} 
-                                                        order={market.data.displayOrder} 
-                                                        socket={this.props.socket} 
-                                                        oddFormat={this.props.oddFormat} 
-                                                        />)
+            const markets = sortedMarkets.map((market) => 
+            <Market 
+                marketData={market} 
+                key={market.data.marketId} 
+                order={market.data.displayOrder} 
+                socket={this.props.socket} 
+                oddFormat={this.props.oddFormat} 
+            />)
             return (
                 <div>{markets}</div>
             )

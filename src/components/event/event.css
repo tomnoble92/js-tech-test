@@ -5,6 +5,8 @@
     background-color: #fafafa;
     border: none;
     border-bottom: 1px solid #eee;
+    text-decoration: none;
+    color: inherit;
 }
 
 .event_time {
