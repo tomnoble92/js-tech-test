@@ -13,17 +13,17 @@ class Market extends React.Component {
 
   toggleAccordion(e) {
     this.setState(prevState => ({isOpen: !prevState.isOpen}))
-    this.outcomes = this.props.marketData.data.outcomes.map((outcome) => 
+  }
+
+  render() {
+    if(this.props.marketData && this.props.marketData.data.status.displayable) {
+      this.outcomes = this.props.marketData.data.outcomes.map((outcome) => 
       <Outcome 
         outcomeId={outcome} 
         key={outcome} 
         socket={this.props.socket} 
         oddFormat={this.props.oddFormat} 
-      />)
-  }
-
-  render() {
-    if(this.props.marketData && this.props.marketData.data.status.displayable) {
+      /> )
       return (
         <div className={this.state.isOpen ? "market-accordion js-open" : "market-accordion"}>
           <button type="button" onClick={(e) => this.toggleAccordion(e)} className="market-accordion__header">
@@ -34,7 +34,7 @@ class Market extends React.Component {
             </svg>
           </button>
           <div className="market-accordion__content">
-          {this.outcomes}
+            {this.outcomes}
           </div>
       </div>
       )

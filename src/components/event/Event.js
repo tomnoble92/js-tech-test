@@ -4,7 +4,6 @@ import { Link } from "react-router-dom"
 
 function Event(props) {
   function handleClick() {
-    debugger
     props.pickURL(props.id)
   }
   const time = props.time.slice(11,16)
