@@ -31,11 +31,11 @@ class Outcome extends React.Component {
            if(decimal.length > 5) {
             decimal = decimal.slice(0,6)
            }
-           let odd
+
            if(this.props.oddFormat === 'f') {
-            return odd = data.data.price.num + '/' + data.data.price.den
+            return data.data.price.num + '/' + data.data.price.den
            } else {
-               return odd = decimal
+               return decimal
            }
         }
     }
