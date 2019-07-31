@@ -32,7 +32,7 @@ class Outcome extends React.Component {
             decimal = decimal.slice(0,6)
            }
 
-           if(this.props.oddFormat === 'f') {
+           if(this.props.oddFormat === 'fractional') {
             return data.data.price.num + '/' + data.data.price.den
            } else {
                return decimal

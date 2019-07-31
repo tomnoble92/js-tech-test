@@ -1,6 +1,7 @@
 .app-header{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #0A276C;
   color: #fff;
 }
@@ -12,5 +13,6 @@
 }
 
 .btn {
+  width: 175px;
   color: #fff;
 }

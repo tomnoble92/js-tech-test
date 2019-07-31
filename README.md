@@ -4,6 +4,8 @@
 
 I made the choice of choosing the React Framework to develop the app, more specifically using the create-react-app. The benefits for choosing this approach are the built in config tools like Webpack and Babel which saves time on setting up the app.
 
+I used React Router for routing purposes.
+
 I haven't leaned on any CSS frameworks the UI is all built from scratch mainly taking advantage of the Flexible Box Module.
 
 For testing I have used Jest and Enzyme because they are the recommended frameworks for React
