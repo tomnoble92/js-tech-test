@@ -27,12 +27,11 @@ docker run -it --rm --name sbg-tech-test-api -p 8888-8890:8888-8890 sbgtechtest/
 
 ### Running the App
 
-1. 
 ```bash
 # To install run the below command in the root directory
 npm install
 ```
-2.
+
 ```bash
 # To start run the below command in the root directory,
 npm start
@@ -43,7 +42,6 @@ Open http://localhost:3000 to view it in the browser.
 
 ### Running the App Tests
 
-1.
 ```bash
 # To start the test suite run the below command in the root directory
 npm test
