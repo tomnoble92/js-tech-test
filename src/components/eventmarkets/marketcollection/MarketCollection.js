@@ -39,9 +39,9 @@ class MarketCollection extends React.Component {
                                                         socket={this.props.socket} 
                                                         oddFormat={this.props.oddFormat} 
                                                         />)
-                                                        return (
-                                                            <div>{markets}</div>
-                                                        )
+            return (
+                <div>{markets}</div>
+            )
         } else return null
        
         
